@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        @font-face {
+            font-family: 'CustomFont'; /* 폰트 이름 설정 */
+            src: url('eosm_1204.ttf') format('truetype'); /* TTF 파일 경로 */
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            background: rgb(0, 255, 0);
+            padding: 100px;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'CustomFont', sans-serif; /* 사용자 정의 폰트 적용 */
+            font-size: 50px;
+            color: white; /* 글자 색상 */
+            margin-bottom: 10px; /* 버튼과의 간격 */
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px); /* 시작 위치를 아래로 설정 */
+            animation: fadeInUp 1s forwards; /* 애니메이션 적용 */
+        }
+
+        h2 {
+            font-size: 20px;
+            color: white; /* 글자 색상 */
+            margin-bottom: 40px; /* 버튼과의 간격 */
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px); /* 시작 위치를 아래로 설정 */
+            animation: fadeInUp 1s forwards; /* 애니메이션 적용 */
+        }
+
+        .control-btn {
+            cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+            opacity: 0; /* 시작 시 투명하게 설정 */
+            transform: translateY(20px); /* 시작 위치를 아래로 설정 */
+            animation: fadeInUp 1s forwards; /* 애니메이션 적용 */
+            animation-delay: 0.5s; /* 애니메이션 지연 */
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1; /* 최종 상태의 불투명도 */
+                transform: translateY(0); /* 최종 위치 */
+            }
+        }
+    </style>
+</head>
+<title>그대 안의 블루</title>
+<body>
+    <h1>그대 안의 블루</h1>
+    <h2>하늘 아래 같은 블루 없다 당신의 블루는?</h2>
+
+    <img src="ball.png" id="controlBtn" class="control-btn" alt="Control Button" width="330px" height="330px">
+
+    <script type="text/javascript">
+        console.log("ok");
+        let myTimer;
+        let isPlaying = true; // 현재 상태를 추적
+        const bgm = document.getElementById("bgm");
+
+        // 초기 색상 변경
+        myTimer = setInterval(change, 100);
+
+        document.getElementById("controlBtn").onclick = function() {
+            if (isPlaying) {
+                clearInterval(myTimer);
+                bgm.pause(); // BGM 정지
+            } else {
+                myTimer = setInterval(change, 100);
+                bgm.play(); // BGM 재생
+            }
+            isPlaying = !isPlaying; // 상태 반전
+        };
+
+        // Hue, Saturation, Brightness 범위를 지정합니다.
+        const minHue = 215; // 최소 Hue 값
+        const maxHue = 260; // 최대 Hue 값
+        const minSaturation = 50; // 최소 Saturation 값
+        const maxSaturation = 100; // 최대 Saturation 값
+        const minBrightness = 50; // 최소 Brightness 값
+        const maxBrightness = 100; // 최대 Brightness 값
+
+        function change() {
+            document.body.style.background = randomHSB();
+            console.log(1);
+        }
+
+        function randomHSB() {
+            // 지정한 범위 내에서 랜덤한 Hue, Saturation, Brightness 값 생성
+            const h = Math.floor(Math.random() * (maxHue - minHue + 1)) + minHue;
+            const s = Math.floor(Math.random() * (maxSaturation - minSaturation + 1)) + minSaturation;
+            const b = Math.floor(Math.random() * (maxBrightness - minBrightness + 1)) + minBrightness;
+            return `hsl(${h}, ${s}%, ${b}%)`; // HSL 형식으로 반환
+        }
+    </script>
+</body>
+</html>
